@@ -41,3 +41,21 @@ docker push ptibor84/python-app:v1
 
 ## Create Kubernetes cluster with kind
 
+https://kind.sigs.k8s.io/docs/user/quick-start/
+
+Install
+
+```bash
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.27.0/kind-linux-amd64
+chmod +x kind
+sudo mv kind /usr/local/bin
+```
+
+Create & reach the K8s (kind) cluster
+
+```bash
+kind create cluster
+
+kubectl cluster-info --context kind-kind
+kubectl config use-context kind-kind
+```
