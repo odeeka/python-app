@@ -1,6 +1,8 @@
 name: ci
 
 on:
+  workflow_dispatch:
+
   push:
     paths:
       - src/**
@@ -12,9 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo $GITHUB_SHA
+
       - name: Set outputs
         id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: echo "sha_short=${GITHUB_SHA::5}" >> $GITHUB_OUTPUT
 
       - name: Check outputs
         run: echo ${{ steps.vars.outputs.sha_short }}
