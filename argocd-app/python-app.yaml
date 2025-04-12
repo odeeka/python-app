@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: python-app
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: ptibor84/python-app
+    argocd-image-updater.argoproj.io/update-strategy: latest
+    argocd-image-updater.argoproj.io/image-tag-update-strategy.ptibor84_python-app: latest
+    argocd-image-updater.argoproj.io/helm-image-tag-spec.ptibor84_python-app: image.tag
+    argocd-image-updater.argoproj.io/write-back-method: helm
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/odeeka/python-app.git
+    targetRevision: HEAD
+    path: charts/python-app
+    helm:
+      valueFiles:
+        - values.yaml
+      parameters:
+        - name: image.tag
+          value: latest
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: python-app
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
