@@ -1,0 +1,7 @@
+server:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    enabled: true
+    ingressClassName: "nginx"
+    hostname: "argocd.example.org"

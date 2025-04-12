@@ -33,7 +33,13 @@ python3 src/app.py
 ```bash
 docker build -t python-app:v1 .
 docker run -p 8080:5000 --rm python-app:v1
+```
 
+> Note that the first port (8080) is the host port and second port (5000) is the container port
+
+Create tags for Dockerhub:
+
+```bash
 docker tag python-app:v1 ptibor84/python-app:v1
 docker login
 docker push ptibor84/python-app:v1
@@ -59,3 +65,63 @@ kind create cluster
 kubectl cluster-info --context kind-kind
 kubectl config use-context kind-kind
 ```
+
+After create load-balancer and ingress for cluster
+
+https://kind.sigs.k8s.io/docs/user/loadbalancer/
+
+## Create Kubernetes manifest for Python app
+
+1) deployment.yaml
+2) service.yaml
+3) ingress.yaml
+
+Test with webbrowser:
+
+```bash
+curl http://localhost/api/v1/details
+curl http://localhost/api/v1/healthz
+```
+
+## Create Helm
+
+```bash
+mkdir charts
+helm create python-app
+```
+
+> Note you need to modify the files and value.yaml
+
+Install chart
+
+```bash
+cd charts/python-app
+helm install python-app --create-namespace -n python  .
+```
+
+Uninstall chart
+
+```bash
+helmy -n python uninstall python-app
+```
+
+## Deploy ArgoCD
+
+https://artifacthub.io/packages/helm/argo/argo-cd
+
+```bash
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+helm install argo-cd argo/argo-cd -n argocd --create-namespace --version 7.8.23 -f argocd/values.yaml
+
+helm upgrade argo-cd argo/argo-cd -n argocd --create-namespace --version 7.8.23 -f argocd/values.yaml
+```
+
+Create port-forward and get secret
+
+```bash
+kubectl -n argocd port-forward service/argo-cd-argocd-server 8080:443
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
+```
+
+Open webbrowser and navigate to `https://argocd.example.org`
