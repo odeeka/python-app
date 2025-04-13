@@ -4,12 +4,11 @@ metadata:
   name: python-app
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: ptibor84/python-app
-    argocd-image-updater.argoproj.io/image-tag-update-strategy.ptibor84_python-app: newest-build
-    argocd-image-updater.argoproj.io/update-strategy: newest-build
-    argocd-image-updater.argoproj.io/helm-image-tag-spec.ptibor84_python-app: image.tag
-    argocd-image-updater.argoproj.io/write-back-method: helm
-    argocd-image-updater.argoproj.io/force-update: "true"
+    argocd-image-updater.argoproj.io/image-list: "python-app=ptibor84/python-app:latest"
+    argocd-image-updater.argoproj.io/python-app.helm.image-name: "python-app.deployment.image.repository"
+    argocd-image-updater.argoproj.io/python-app.update-strategy: "latest"
+    argocd-image-updater.argoproj.io/pull-policy: Always
+    argocd-image-updater.argoproj.io/write-back-method: argocd
 spec:
   project: default
   source:
