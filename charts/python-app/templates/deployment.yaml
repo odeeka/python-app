@@ -15,9 +15,9 @@ spec:
     metadata:
       annotations:
         argocd-image-updater.argoproj.io/tracking-id: {{ now | unixEpoch }}
-      {{- with .Values.podAnnotations }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 6 }}
+        {{- end }}
       labels:
         {{- include "python-app.selectorLabels" . | nindent 8 }}
     spec:
