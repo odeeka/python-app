@@ -24,8 +24,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations:
-  argocd-image-updater.argoproj.io/tracking-id: "{{ now | unixEpoch }}"
+podAnnotations: {}
+  #argocd-image-updater.argoproj.io/tracking-id: "{{ now | unixEpoch }}"
 
 podSecurityContext: {}
   # fsGroup: 2000
