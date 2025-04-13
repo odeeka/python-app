@@ -117,6 +117,8 @@ helm install argo-cd argo/argo-cd -n argocd --create-namespace --version 7.8.23 
 helm upgrade argo-cd argo/argo-cd -n argocd --create-namespace --version 7.8.23 -f argocd/values.yaml
 ```
 
+> Note that you have to create local usser for image updater
+
 Create port-forward and get secret
 
 ```bash
@@ -125,3 +127,28 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 
 Open webbrowser and navigate to `https://argocd.example.org`
+
+Install ArgoCD image update
+
+```bash
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+cd argocd-image-updater
+helm install argocd-image-updater argo/argocd-image-updater -n argocd --version 0.12.1 -f values.yaml
+```
+
+Generate token for image updater local user
+
+```bash
+argocd login argocd.example.org
+argocd acocunt list
+argocd account generate-token --account image-updater --id image-updater --grpc-web
+```
+
+Install image updater CLI
+
+```bash
+wget -O argocd-image-updater https://github.com/argoproj-labs/argocd-image-updater/releases/download/v0.16.0/argocd-image-updater-linux_amd64
+chmod +x argocd-image-updater
+sudo mv argocd-image-updater /usr/local/bin/
+```

@@ -1,0 +1,8 @@
+config:
+  argocd:
+    applications_api: argocd
+    serverAddress: http://argocd-server.argocd.svc
+    grpc_web: "true"
+    insecure: "true"
+    plaintext: "true"
+    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJpbWFnZS11cGRhdGVyOmFwaUtleSIsIm5iZiI6MTc0NDUwMTUzMywiaWF0IjoxNzQ0NTAxNTMzLCJqdGkiOiJpbWFnZS11cGRhdGVyIn0.5ehtbN16s0EAhy1GVsSdA3SD9QOSsIv7wmvQUmHXxts"
