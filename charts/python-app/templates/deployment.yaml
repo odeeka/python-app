@@ -13,11 +13,10 @@ spec:
       {{- include "python-app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
       annotations:
-        argocd-image-updater.argoproj.io/tracking-id: {{ now | unixEpoch }}
-        {{- with .Values.podAnnotations }}
-        {{- toYaml . | nindent 6 }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
         {{- include "python-app.selectorLabels" . | nindent 8 }}
     spec:
