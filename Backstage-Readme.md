@@ -136,3 +136,17 @@ python3 -m venv $VIRTUAL_ENV
 PATH="$VIRTUAL_ENV/bin:$PATH"
 pip3 install mkdocs-techdocs-core
 ```
+
+## Software Catalog
+
+Need to create github token with `repo` and `workflow` permissions:
+
+```bash
+docker run --rm -e GITHUB_TOKEN="" -e AUTH_GITHUB_CLIENT_ID="" -e AUTH_GITHUB_CLIENT_SECRET="" -p 3000:3000 -p 7007:7007 -ti -v /home/admin_pet/github/python-app/backstage-app:/app -w /app node:18-bookworm-slim bash
+```
+
+
+Create new repo that is fully deticated for the template -> backstage-software-templates
+
+Add the `Template` location into `app-config.local.yaml` (catalog/locations)
+
