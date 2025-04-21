@@ -26,7 +26,7 @@ Run container with backend exposure:
 ```bash
 docker run --rm -p 3000:3000 -p 7007:7007 -ti -v /home/admin_pet/github/python-app/backstage-app:/app -w /app node:18-bookworm-slim bash
 
-docker run --rm -e AUTH_GITHUB_CLIENT_ID="Ov23liAAHsM4fISh6Oix" -e AUTH_GITHUB_CLIENT_SECRET="da5fff0ed5f39bd36a0376ec1c4b188bee2101fb" -p 3000:3000 -p 7007:7007 -ti -v /home/admin_pet/github/python-app/backstage-app:/app -w /app node:18-bookworm-slim bash
+docker run --rm -e AUTH_GITHUB_CLIENT_ID="" -e AUTH_GITHUB_CLIENT_SECRET="" -p 3000:3000 -p 7007:7007 -ti -v /home/admin_pet/github/python-app/backstage-app:/app -w /app node:18-bookworm-slim bash
 ```
 
 RUN THE BACKSTAGE -> `yarn dev`
