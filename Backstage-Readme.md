@@ -111,3 +111,28 @@ Create the annotation in `catalog-info.yaml` file for referencing the mkdocs.yam
 annotations:
   backstage.io/techdocs-ref: dir:.
 ```
+
+Need to install the `mkdocs` for Backstage > Check the `/app/backstage/packages/app/src/App.tsx` file and it contains the import `@backstage/plugin-techdocs` ???
+
+Create the config in `app-config.local.yml`
+
+```yaml
+techdocs:
+  builder: 'local'
+  publisher:
+    type: 'local'
+  generator:
+    runIn: local
+```
+
+Install the `mkdocs` on the server / container -> [`apt-get install mkdocs`](https://backstage.io/docs/features/techdocs/getting-started)
+
+You have to use the `pip` installation (in the container in /app folder):
+
+```bash
+apt-get update && apt-get install -y python3 python3-pip python3-venv
+VIRTUAL_ENV=/opt/venv
+python3 -m venv $VIRTUAL_ENV
+PATH="$VIRTUAL_ENV/bin:$PATH"
+pip3 install mkdocs-techdocs-core
+```
