@@ -29,6 +29,10 @@ docker run --rm -p 3000:3000 -p 7007:7007 -ti -v /home/admin_pet/github/python-a
 docker run --rm -e AUTH_GITHUB_CLIENT_ID="Ov23liAAHsM4fISh6Oix" -e AUTH_GITHUB_CLIENT_SECRET="da5fff0ed5f39bd36a0376ec1c4b188bee2101fb" -p 3000:3000 -p 7007:7007 -ti -v /home/admin_pet/github/python-app/backstage-app:/app -w /app node:18-bookworm-slim bash
 ```
 
+RUN THE BACKSTAGE -> `yarn dev`
+
+Open the WebBrowser on host machine and navigate to `localhost:3000`
+
 ## User auth
 
 Make the Github Auth setup
@@ -88,3 +92,22 @@ spec:
 ## Catalog
 
 Create `catalog-info.yaml` in the target application repo.
+
+## TechDocs
+
+https://stackedit.io/app#
+
+Create base folder `docs/index.md`
+
+Integrate the `mkdocs` -> https://example-mkdocs-basic.readthedocs.io/en/latest/#example-project-usage
+
+Copy the `mkdocs.yaml` file from Backstage Github Repo (https://github.com/backstage/backstage/blob/master/mkdocs.yml)
+
+Create the file under root `mkdocs.yaml` and configure it
+
+Create the annotation in `catalog-info.yaml` file for referencing the mkdocs.yaml (techdocs-ref)
+
+```yaml
+annotations:
+  backstage.io/techdocs-ref: dir:.
+```
