@@ -1,3 +1,5 @@
 .venv/*
 
 secret-readme.md
+
+backstage-app/**

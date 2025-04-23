@@ -150,3 +150,55 @@ Create new repo that is fully deticated for the template -> backstage-software-t
 
 Add the `Template` location into `app-config.local.yaml` (catalog/locations)
 
+## Databse for Backstage
+
+```bash
+docker network create backstage
+
+docker run -d --name psql -e POSTGRES_PASSWORD=backstage \
+  -e POSTGRES_DB=backstage \
+  -e POSTGRES_USER=backstage \
+  -e PGDATA=/var/lib/postgresql/data/pgdata \
+  -v /tmp/psql:/var/lib/postgresql/data \
+  --network backstage \
+  postgres:16
+
+docker start psql
+```
+
+Steps:
+- Create production ready Dockerfile
+- Create `app-config.production.yaml` (contains the Postgres config)
+- Modify `app-config.yaml` (disable guest auth)
+- Disable Kubernetes plugin -> `packages/backend/src/index.ts`
+
+```bash
+yarn install -frozen-lockfile
+yarn tsc
+yarn build:backend --config ../../app-config.yaml --config ../../app-config.production.yaml
+```
+
+> Note that you have to run in the container
+
+- The build creates `packages/backend/dist/` -> `bundle.tar.gz` and `skeleton.tar.gz`
+- cd backstage-app && sudo chown admin_pet  backstage/
+
+Docker buildx installation:
+
+```bash
+mkdir -p ~/.docker/cli-plugins
+BUILDX_VERSION=$(curl -s https://api.github.com/repos/docker/buildx/releases/latest | grep tag_name | cut -d '"' -f 4)
+
+curl -Lo ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
+chmod +x ~/.docker/cli-plugins/docker-buildx
+
+docker buildx version
+```
+
+Build the  image from the backstage folder
+
+```bash
+cd backstage-app/backstage
+cat Dockerfile
+docker build -t backstage_production .
+```
